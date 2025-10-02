@@ -1,32 +1,30 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DApp Web3 Básica</title>
+  <title>Web3 Demo - GitHub Pages</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+  <!-- Importamos ethers.js desde CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>DApp Web3 en Polygon</h1>
+    <h1>Web3 + GitHub Pages</h1>
 
+    <!-- Conexión -->
     <button id="connectButton">Conectar Wallet</button>
-    <p id="account">No conectado</p>
+    <p id="account">Cuenta: -</p>
+    <p id="balance">Saldo MATIC: -</p>
 
-    <h2>Saldo</h2>
-    <p>MATIC: <span id="maticBalance">-</span></p>
-    <p>USDT (ERC20): <span id="tokenBalance">-</span></p>
-
-    <h2>Enviar Tokens</h2>
+    <!-- Envío de tokens -->
+    <h2>Enviar MATIC</h2>
     <input type="text" id="recipient" placeholder="Dirección destino">
-    <input type="text" id="amount" placeholder="Cantidad">
-    <button id="sendMatic">Enviar MATIC</button>
-    <button id="sendToken">Enviar USDT</button>
-    <p id="txStatus"></p>
+    <input type="text" id="amount" placeholder="Cantidad en MATIC">
+    <button id="sendButton">Enviar</button>
 
+    <!-- Historial -->
     <h2>Historial</h2>
-    <ul id="txHistory"></ul>
+    <div id="history"></div>
   </div>
 
   <script src="app.js"></script>
