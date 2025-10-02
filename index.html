@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Web3 Demo - GitHub Pages</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Importamos ethers.js desde CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -27,6 +25,10 @@
     <div id="history"></div>
   </div>
 
+  <!-- 👇 MUY IMPORTANTE: primero ethers -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
+  <!-- 👇 después tu app.js -->
   <script src="app.js"></script>
 </body>
 </html>
