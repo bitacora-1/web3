@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conectar Wallet Web3</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #0d1117;
+      color: #fff;
+      margin: 0;
+    }
+    button {
+      background: #f6851b;
+      border: none;
+      padding: 15px 25px;
+      font-size: 18px;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #e2761b;
+    }
+  </style>
+</head>
+<body>
+  <button id="connectButton">Conectar Wallet</button>
+
+  <script>
+    const connectButton = document.getElementById("connectButton");
+
+    async function connectWallet() {
+      if (typeof window.ethereum !== "undefined") {
+        try {
+          const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+          connectButton.textContent = "Conectado: " + accounts[0].slice(0, 6) + "..." + accounts[0].slice(-4);
+        } catch (error) {
+          console.error(error);
+          connectButton.textContent = "Error al conectar";
+        }
+      } else {
+        connectButton.textContent = "MetaMask no detectado";
+      }
+    }
+
+    connectButton.addEventListener("click", connectWallet);
+  </script>
+</body>
+</html>
