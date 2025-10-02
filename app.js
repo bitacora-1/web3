@@ -1,33 +1,35 @@
 let provider;
 let signer;
-let currentAccount;
 
 const connectButton = document.getElementById("connectButton");
+const accountDisplay = document.getElementById("account");
+const balanceDisplay = document.getElementById("balance");
 const sendButton = document.getElementById("sendButton");
 
-connectButton.onclick = connectWallet;
-sendButton.onclick = sendMatic;
-
 async function connectWallet() {
-  if (window.ethereum) {
-    provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send("eth_requestAccounts", []);
-    signer = provider.getSigner();
-    currentAccount = await signer.getAddress();
+  if (typeof window.ethereum !== "undefined") {
+    try {
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+      signer = provider.getSigner();
+      const address = await signer.getAddress();
 
-    document.getElementById("account").innerText = "Cuenta: " + currentAccount;
+      accountDisplay.textContent = "Cuenta: " + address;
+      connectButton.textContent = "Conectado";
 
-    // Mostrar saldo
-    let balance = await provider.getBalance(currentAccount);
-    document.getElementById("balance").innerText =
-      "Saldo MATIC: " + ethers.utils.formatEther(balance);
+      const balance = await provider.getBalance(address);
+      balanceDisplay.textContent = "Saldo MATIC: " + ethers.utils.formatEther(balance);
+    } catch (err) {
+      console.error(err);
+      connectButton.textContent = "Error al conectar";
+    }
   } else {
-    alert("Instala MetaMask para continuar.");
+    alert("MetaMask no detectado");
   }
 }
 
-async function sendMatic() {
-  if (!signer) return alert("Conecta la wallet primero.");
+async function sendTransaction() {
+  if (!signer) return;
 
   const recipient = document.getElementById("recipient").value;
   const amount = document.getElementById("amount").value;
@@ -39,9 +41,12 @@ async function sendMatic() {
     });
 
     document.getElementById("history").innerHTML +=
-      `<p>Enviado ${amount} MATIC a ${recipient}. TX: <a href="https://polygonscan.com/tx/${tx.hash}" target="_blank">${tx.hash}</a></p>`;
+      `<p>Tx enviada: <a href="https://polygonscan.com/tx/${tx.hash}" target="_blank">${tx.hash}</a></p>`;
   } catch (err) {
     console.error(err);
-    alert("Error al enviar transacción.");
+    alert("Error al enviar transacción");
   }
 }
+
+connectButton.addEventListener("click", connectWallet);
+sendButton.addEventListener("click", sendTransaction);
