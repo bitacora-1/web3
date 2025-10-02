@@ -1,79 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BITACORA Web3 - Multi-red</title>
-
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- ethers UMD (expuesto como global `ethers`) -->
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<meta charset="UTF-8">
+<title>Dashboard Web3</title>
+<script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+<style>
+body { font-family: Arial; background: #f0f2f5; padding: 20px; }
+button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+#walletInfo, #tokens { margin-top: 20px; }
+.tokenCell { display: inline-block; width: 120px; padding: 10px; margin: 5px; background: #fff; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+#actions { margin-top: 20px; }
+input { width: 200px; padding: 5px; margin: 3px; }
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <h1>BITACORA Web3</h1>
-    <div class="top-actions">
-      <button id="connectBtn" class="btn">Conectar</button>
-      <span id="accountLabel" class="account">Cuenta: -</span>
-    </div>
-  </header>
 
-  <main class="layout">
-    <!-- Izquierda: lista de redes -->
-    <aside class="leftPanel">
-      <h2>Redes</h2>
-      <div id="networksList" class="networksList"></div>
-    </aside>
+<h1>Mi Dashboard Web3</h1>
+<button id="connectWallet">Conectar Wallet</button>
 
-    <!-- Derecha: datos comprimidos en "celdas" -->
-    <section class="rightPanel">
-      <div class="controls">
-        <button id="refreshBtn" class="btn">Actualizar</button>
-        <div class="opButtons">
-          <button id="transferBtn" class="btn">Transferir</button>
-          <button id="swapBtn" class="btn">Swap</button>
-          <button id="bridgeBtn" class="btn">Bridge</button>
-        </div>
-      </div>
+<div id="walletInfo"></div>
 
-      <div id="grids" class="grids">
-        <!-- Cada red crea un grid compacto con balances y tokens -->
-      </div>
-    </section>
-  </main>
+<h2>Tokens</h2>
+<div id="tokens"></div>
 
-  <!-- Modal simple para transferir -->
-  <div id="modal" class="modal hidden">
-    <div class="modalContent">
-      <h3 id="modalTitle">Transferir</h3>
-      <label>Red:
-        <select id="modalNetwork"></select>
-      </label>
-      <label>Tipo:
-        <select id="modalType">
-          <option value="native">Nativo (MATIC / ETH)</option>
-          <option value="token">Token ERC-20</option>
-        </select>
-      </label>
-      <label id="tokenSelectLabel" class="hidden">Token:
-        <select id="modalToken"></select>
-      </label>
-      <label>Destino:
-        <input id="modalTo" placeholder="0x..." />
-      </label>
-      <label>Cantidad:
-        <input id="modalAmount" placeholder="0.1" />
-      </label>
+<h2>Acciones</h2>
+<div id="actions">
+  <input id="recipient" placeholder="Dirección destino" />
+  <input id="amount" placeholder="Cantidad" type="number" step="any" />
+  <select id="tokenSelect">
+    <option value="ETH">ETH/POL</option>
+  </select>
+  <button id="sendBtn">Enviar</button>
+</div>
 
-      <div class="modalActions">
-        <button id="modalSend" class="btn">Enviar</button>
-        <button id="modalClose" class="btn alt">Cerrar</button>
-      </div>
-      <div id="modalStatus" class="status"></div>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
+<script src="dashboard.js"></script>
 </body>
 </html>
