@@ -1,34 +1,81 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #0d1117;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
+:root{
+  --bg:#0d1117; --card:#0f1720; --accent:#f6851b; --text:#e6eef6;
+  --muted:#97a0ab;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter, Arial, Helvetica, sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
 
-.container {
-  max-width: 500px;
-  margin: auto;
+/* top bar */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 22px;
+  background:#0b0e12;
+  border-bottom:3px solid #0b0e12;
 }
+.topbar h1{margin:0;font-size:20px;color:var(--accent)}
+.top-actions{display:flex;gap:12px;align-items:center}
+.account{font-size:13px;color:var(--muted)}
 
-button {
-  background: #f6851b;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  color: #fff;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px;
+/* layout */
+.layout{display:flex;height:calc(100vh - 64px)}
+.leftPanel{
+  width:260px;
+  padding:18px;
+  border-right:6px solid #000;
+  background:linear-gradient(180deg,#090a0c,#0f1316);
 }
+.leftPanel h2{color:var(--accent);margin-top:0}
+.networksList{display:flex;flex-direction:column;gap:10px;margin-top:10px}
 
-button:hover {
-  background: #e2761b;
+/* network button */
+.netCard{
+  background:var(--card);
+  border-radius:8px;
+  padding:10px;
+  cursor:pointer;
+  border:2px solid transparent;
+  transition:all .15s;
+  font-size:14px;
 }
+.netCard.active{border-color:var(--accent);box-shadow:0 6px 18px rgba(0,0,0,.6)}
+.netCard .title{font-weight:700;color:var(--accent)}
+.netCard small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
 
-input {
-  padding: 8px;
-  margin: 5px;
-  border-radius: 6px;
-  border: 1px solid #333;
+/* right panel */
+.rightPanel{flex:1;padding:18px;display:flex;flex-direction:column;gap:12px}
+.controls{display:flex;justify-content:space-between;align-items:center}
+.btn{
+  background:var(--accent);
+  color:#fff;padding:8px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:600
 }
+.btn.alt{background:#2b2f33}
+.opButtons{display:flex;gap:8px}
+
+/* grids area */
+.grids{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.gridCard{
+  background:#071017;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.03);
+}
+.gridHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.gridHeader h3{margin:0;font-size:15px;color:var(--accent)}
+.cellRow{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;padding:6px 0;border-top:1px dashed rgba(255,255,255,.02)}
+.cellRow:first-of-type{border-top:none}
+.cell{padding:6px;border-radius:6px;background:rgba(255,255,255,.02);font-size:13px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.tokenName{font-weight:600}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:99}
+.hidden{display:none}
+.modalContent{background:#081118;padding:18px;border-radius:10px;min-width:320px;border:1px solid rgba(255,255,255,.03)}
+.modalContent h3{margin-top:0;color:var(--accent)}
+.modalContent label{display:block;margin:8px 0;font-size:13px}
+.modalContent input, .modalContent select{width:100%;padding:8px;border-radius:6px;border:1px solid #223033;background:#071014;color:var(--text)}
+.modalActions{display:flex;gap:10px;margin-top:10px}
+.status{margin-top:8px;color:var(--muted);font-size:13px}
