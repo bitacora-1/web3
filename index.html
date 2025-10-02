@@ -1,36 +1,79 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>BITACORA Web3 </title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BITACORA Web3 - Multi-red</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ethers UMD (expuesto como global `ethers`) -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 </head>
 <body>
-  <div class="container">
+  <header class="topbar">
     <h1>BITACORA Web3</h1>
+    <div class="top-actions">
+      <button id="connectBtn" class="btn">Conectar</button>
+      <span id="accountLabel" class="account">Cuenta: -</span>
+    </div>
+  </header>
 
-    <!-- Conexión -->
-    <button id="connectButton">Conectar Wallet</button>
-    <p id="account">Cuenta: -</p>
-    <p id="balance">Saldo MATIC: -</p>
+  <main class="layout">
+    <!-- Izquierda: lista de redes -->
+    <aside class="leftPanel">
+      <h2>Redes</h2>
+      <div id="networksList" class="networksList"></div>
+    </aside>
 
-    <!-- Envío de tokens -->
-    <h2>Enviar MATIC</h2>
-    <input type="text" id="recipient" placeholder="Dirección destino">
-    <input type="text" id="amount" placeholder="Cantidad en MATIC">
-    <button id="sendButton">Enviar</button>
+    <!-- Derecha: datos comprimidos en "celdas" -->
+    <section class="rightPanel">
+      <div class="controls">
+        <button id="refreshBtn" class="btn">Actualizar</button>
+        <div class="opButtons">
+          <button id="transferBtn" class="btn">Transferir</button>
+          <button id="swapBtn" class="btn">Swap</button>
+          <button id="bridgeBtn" class="btn">Bridge</button>
+        </div>
+      </div>
 
-    <!-- Historial -->
-    <h2>Historial</h2>
-    <div id="history"></div>
+      <div id="grids" class="grids">
+        <!-- Cada red crea un grid compacto con balances y tokens -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal simple para transferir -->
+  <div id="modal" class="modal hidden">
+    <div class="modalContent">
+      <h3 id="modalTitle">Transferir</h3>
+      <label>Red:
+        <select id="modalNetwork"></select>
+      </label>
+      <label>Tipo:
+        <select id="modalType">
+          <option value="native">Nativo (MATIC / ETH)</option>
+          <option value="token">Token ERC-20</option>
+        </select>
+      </label>
+      <label id="tokenSelectLabel" class="hidden">Token:
+        <select id="modalToken"></select>
+      </label>
+      <label>Destino:
+        <input id="modalTo" placeholder="0x..." />
+      </label>
+      <label>Cantidad:
+        <input id="modalAmount" placeholder="0.1" />
+      </label>
+
+      <div class="modalActions">
+        <button id="modalSend" class="btn">Enviar</button>
+        <button id="modalClose" class="btn alt">Cerrar</button>
+      </div>
+      <div id="modalStatus" class="status"></div>
+    </div>
   </div>
 
-  <!-- 👇 MUY IMPORTANTE: primero ethers -->
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-
-  <!-- 👇 después tu app.js -->
   <script src="app.js"></script>
 </body>
 </html>
-
-
