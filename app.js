@@ -1,4 +1,18 @@
-const socket = io("http://localhost:3000"); // cambia si tu servidor está remoto
+// Firebase configuration (reemplaza con tu proyecto)
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "TU_PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://TU_PROJECT_ID-default-rtdb.firebaseio.com",
+  projectId: "TU_PROJECT_ID",
+  storageBucket: "TU_PROJECT_ID.appspot.com",
+  messagingSenderId: "SENDER_ID",
+  appId: "APP_ID"
+};
+
+// Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
 const connectButton = document.getElementById("connectButton");
 const chatBox = document.getElementById("chatBox");
 const messagesDiv = document.getElementById("messages");
@@ -7,7 +21,7 @@ const sendButton = document.getElementById("sendButton");
 
 let userAccount = null;
 
-// Conectar wallet
+// Conectar Wallet
 async function connectWallet() {
   if (typeof window.ethereum !== "undefined") {
     try {
@@ -24,7 +38,7 @@ async function connectWallet() {
   }
 }
 
-// Mostrar mensaje en el chat
+// Mostrar mensaje
 function addMessage(sender, text) {
   const div = document.createElement("div");
   div.classList.add("message");
@@ -36,15 +50,16 @@ function addMessage(sender, text) {
 // Enviar mensaje
 sendButton.addEventListener("click", () => {
   const text = messageInput.value.trim();
-  if (text !== "" && userAccount) {
-    const msg = { sender: userAccount, text }; // dirección completa como nombre
-    socket.emit("chatMessage", msg);
+  if (text && userAccount) {
+    const msg = { sender: userAccount, text };
+    db.ref("chat").push(msg);
     messageInput.value = "";
   }
 });
 
-// Recibir mensajes de otros usuarios
-socket.on("chatMessage", (msg) => {
+// Escuchar nuevos mensajes
+db.ref("chat").on("child_added", snapshot => {
+  const msg = snapshot.val();
   addMessage(msg.sender, msg.text);
 });
 
